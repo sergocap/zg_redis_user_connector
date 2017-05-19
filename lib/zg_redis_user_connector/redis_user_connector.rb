@@ -21,6 +21,10 @@ class RedisUserConnector
     pubsub_connection.subscribe(channel, &block)
   end
 
+  def self.del(key)
+    connection.del(key)
+  end
+
   private
 
   def self.connect_options
