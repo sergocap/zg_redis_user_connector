@@ -21,6 +21,15 @@ class RedisUserConnector
     pubsub_connection.subscribe(channel, &block)
   end
 
+  def self.users_ids
+    arr = []
+    connection.scan_each(match: 'user:[0-9a-f]*[^g-z:]') do |key_name|
+      user_id = key_name.scan(/(?<=:).*/).first
+      arr << user_id
+    end
+    arr
+  end
+
   private
 
   def self.connect_options
